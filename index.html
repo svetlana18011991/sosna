@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,76 +6,71 @@
     <title>Рост сосны</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #2c3e50;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Убираем прокрутку */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Делаем на весь экран */
         #game-container {
             position: relative;
-            width: 800px;
-            height: 600px;
+            width: 100vw;
+            height: 100vh;
             background-image: url('https://raw.githubusercontent.com/svetlana18011991/sosna/main/%D1%84%D0%BE%D0%BD.png');
             background-size: cover;
-            background-position: center;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background-position: center bottom;
         }
 
-        /* Контейнер для сосны */
+        /* Контейнер для сосны прижат к низу */
         #tree-wrapper {
             position: absolute;
-            bottom: 10%; /* Отрегулируй, если сосна должна быть выше/ниже */
+            bottom: 0; 
             left: 50%;
             transform: translateX(-50%);
-            width: 300px; /* Примерная ширина, настрой под свои картинки */
-            height: 400px;
+            width: 100%; 
+            height: 90vh; /* Занимает почти всю высоту */
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: flex-end; /* Все картинки выравниваются по нижнему краю */
+            pointer-events: none; /* Чтобы картинка не перекрывала клики по кнопке */
         }
 
         .tree-img {
             position: absolute;
-            max-width: 100%;
+            max-width: 90vw;
             max-height: 100%;
             transition: opacity 1.5s ease-in-out;
             transform-origin: bottom center;
+            bottom: 5%; /* Небольшой отступ от самого низа экрана, отрегулируй если нужно */
         }
 
         #tree-next {
             opacity: 0;
         }
 
-        /* Анимация неверного ответа */
-        @keyframes shakeAndRed {
-            0% { transform: translateX(0) rotate(0deg); }
-            20% { transform: translateX(-10px) rotate(-3deg); filter: sepia(1) hue-rotate(-50deg) saturate(5); }
-            40% { transform: translateX(10px) rotate(3deg); filter: sepia(1) hue-rotate(-50deg) saturate(5); }
-            60% { transform: translateX(-10px) rotate(-3deg); filter: sepia(1) hue-rotate(-50deg) saturate(5); }
-            80% { transform: translateX(10px) rotate(3deg); filter: sepia(1) hue-rotate(-50deg) saturate(5); }
-            100% { transform: translateX(0) rotate(0deg); filter: none; }
+        /* Анимация неверного ответа (пульсация цветом на месте) */
+        @keyframes pulseRed {
+            0% { filter: none; transform: scale(1); }
+            50% { filter: sepia(1) hue-rotate(-50deg) saturate(5); transform: scale(0.98); }
+            100% { filter: none; transform: scale(1); }
         }
 
         .error-anim {
-            animation: shakeAndRed 0.6s ease-in-out;
+            animation: pulseRed 1s ease-in-out;
         }
 
         /* Кнопка Далее */
         #btn-next {
             position: absolute;
-            bottom: 2%; /* Позиция кнопки */
+            bottom: 5%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 10px 25px;
-            font-size: 18px;
+            padding: 12px 30px;
+            font-size: 20px;
             font-weight: bold;
             color: white;
             background-color: #27ae60;
@@ -94,7 +88,7 @@
         /* Окно с вопросом */
         #question-modal {
             position: absolute;
-            top: 50%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(255, 255, 255, 0.95);
@@ -105,11 +99,11 @@
             display: none;
             z-index: 20;
             width: 80%;
-            max-width: 400px;
+            max-width: 500px;
         }
 
         #question-text {
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 20px;
             color: #333;
         }
@@ -118,8 +112,8 @@
             display: block;
             width: 100%;
             margin: 10px 0;
-            padding: 12px;
-            font-size: 16px;
+            padding: 15px;
+            font-size: 18px;
             background: #3498db;
             color: white;
             border: none;
@@ -144,7 +138,7 @@
             top: 20%;
             right: 10%;
             font-family: 'Caveat', cursive;
-            font-size: 80px;
+            font-size: 100px;
             color: #f1c40f;
             text-shadow: 2px 2px 0 #d35400, -1px -1px 0 #d35400, 1px -1px 0 #d35400, -1px 1px 0 #d35400, 3px 3px 10px rgba(0,0,0,0.5);
             transform: rotate(-10deg);
@@ -165,7 +159,7 @@
         <img id="tree-next" class="tree-img" src="" alt="Сосна рост">
     </div>
 
-    <button id="btn-next">Далее</button>
+    <button id="btn-next">Начать рост!</button>
 
     <div id="question-modal">
         <div id="question-text">Вопрос?</div>
@@ -179,7 +173,7 @@
 </div>
 
 <script>
-    // Массив с твоими вопросами (можешь заменить на свои математические задачки)
+    // Массив вопросов (всего 4 вопроса, чтобы вырастить сосну со стадии 1 до стадии 5)
     const questions = [
         { q: "Сколько будет 7 × 8?", options: ["54", "56", "64"], correct: 1 },
         { q: "Реши уравнение: 2x = 10", options: ["x = 5", "x = 4", "x = 6"], correct: 0 },
@@ -187,7 +181,8 @@
         { q: "Корень из 81?", options: ["7", "9", "8"], correct: 1 }
     ];
 
-    let currentStage = 1;
+    let currentQuestionIndex = 0;
+    let treeStage = 1; // Начинаем с 1 картинки
     const maxStage = 5;
     
     const btnNext = document.getElementById('btn-next');
@@ -199,7 +194,7 @@
     const treeWrapper = document.getElementById('tree-wrapper');
     const finalScreen = document.getElementById('final-screen');
 
-    // Предзагрузка картинок, чтобы переход был плавным
+    // Предзагрузка картинок
     const images = [];
     for (let i = 1; i <= maxStage; i++) {
         images[i] = new Image();
@@ -207,8 +202,10 @@
     }
 
     btnNext.addEventListener('click', () => {
-        if (currentStage >= maxStage) return;
-        showQuestion(currentStage - 1);
+        if (currentQuestionIndex < questions.length) {
+            btnNext.textContent = "Далее";
+            showQuestion(currentQuestionIndex);
+        }
     });
 
     function showQuestion(index) {
@@ -232,55 +229,67 @@
         modal.style.display = 'none';
         
         if (selectedIndex === correctIndex) {
-            // Верный ответ - растим сосну
-            currentStage++;
-            growTree(currentStage);
+            // Верный ответ - сосна растет
+            if (treeStage < maxStage) {
+                treeStage++;
+            }
+            growTree(treeStage);
         } else {
-            // Неверный ответ - тряска и мигание
-            btnNext.style.display = 'block';
+            // Неверный ответ - анимация пульсации, сосна НЕ растет
             treeWrapper.classList.remove('error-anim');
-            void treeWrapper.offsetWidth; // перезапуск анимации
+            void treeWrapper.offsetWidth; // сброс анимации
             treeWrapper.classList.add('error-anim');
+            
+            // Ждем завершения анимации (1 сек), затем идем дальше
+            setTimeout(() => {
+                proceedToNextStep();
+            }, 1000);
         }
     }
 
     function growTree(newStage) {
         treeNext.src = images[newStage].src;
-        treeNext.style.opacity = 1; // Плавное проявление новой картинки поверх старой
+        treeNext.style.opacity = 1;
 
         setTimeout(() => {
             treeCurrent.src = treeNext.src;
-            treeNext.style.opacity = 0; // Сбрасываем прозрачность
-            
-            if (currentStage === maxStage) {
-                btnNext.style.display = 'none';
-                showVictory();
-            } else {
-                btnNext.style.display = 'block';
-            }
-        }, 1500); // Ждем завершения CSS-перехода (1.5 секунды)
+            treeNext.style.opacity = 0; 
+            proceedToNextStep();
+        }, 1500); // Ждем 1.5 секунды завершения визуального роста
     }
 
-    // --- ЛОГИКА ФЕЙЕРВЕРКА ---
+    function proceedToNextStep() {
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+            // Если вопросы еще остались
+            btnNext.style.display = 'block';
+        } else {
+            // Вопросы закончились
+            btnNext.style.display = 'none';
+            showVictory();
+        }
+    }
+
+    // Логика фейерверка
     function showVictory() {
         finalScreen.style.display = 'block';
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = document.getElementById('game-container').offsetWidth;
-        canvas.height = document.getElementById('game-container').offsetHeight;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         let particles = [];
-        // Запускаем салют справа
         let startX = canvas.width * 0.8; 
-        let startY = canvas.height * 0.6;
+        let startY = canvas.height * 0.5;
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 120; i++) {
             particles.push({
                 x: startX,
                 y: startY,
-                vx: (Math.random() - 0.5) * 15,
-                vy: (Math.random() - 0.5) * 15,
-                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                vx: (Math.random() - 0.5) * 18,
+                vy: (Math.random() - 0.5) * 18,
+                color: `hsl(${Math.random() * 360}, 100%, 60%)`,
                 life: 1
             });
         }
@@ -290,13 +299,13 @@
             particles.forEach((p, index) => {
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.2; // гравитация
-                p.life -= 0.02;
+                p.vy += 0.25; 
+                p.life -= 0.015;
                 
                 ctx.globalAlpha = Math.max(0, p.life);
                 ctx.fillStyle = p.color;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
                 ctx.fill();
 
                 if (p.life <= 0) particles.splice(index, 1);
