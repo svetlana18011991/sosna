@@ -60,40 +60,40 @@
             animation: pulseRed 1s ease-in-out;
         }
 
-        /* ИСПРАВЛЕННАЯ СТАРТОВАЯ КНОПКА (Красивая лесная и опущена в самый низ) */
+        /* Стартовая кнопка */
         #btn-next {
             position: absolute;
-            bottom: 2%; /* Опустили почти в самый низ */
+            bottom: 2%; 
             left: 50%;
             transform: translateX(-50%);
             padding: 12px 40px;
             font-size: 28px;
-            font-family: 'Caveat', cursive; /* Рукописный шрифт */
+            font-family: 'Caveat', cursive; 
             font-weight: bold;
             color: white;
-            background: linear-gradient(to bottom, #8bc34a, #558b2f); /* Объемный зеленый градиент */
+            background: linear-gradient(to bottom, #8bc34a, #558b2f); 
             border: 3px solid #33691e;
-            border-radius: 40px; /* Сильное скругление */
+            border-radius: 40px; 
             cursor: pointer;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.4); /* Тени и внутренний блик */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.4); 
             transition: all 0.3s;
             z-index: 10;
             letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Тень текста для читаемости */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
         }
 
         #btn-next:hover { 
             background: linear-gradient(to bottom, #9ccc65, #689f38); 
-            transform: translateX(-50%) translateY(-3px); /* Приподнимается при наведении */
+            transform: translateX(-50%) translateY(-3px); 
             box-shadow: 0 8px 15px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.5);
         }
         
         #btn-next:active { 
-            transform: translateX(-50%) translateY(2px); /* Нажимается */
+            transform: translateX(-50%) translateY(2px); 
             box-shadow: 0 2px 5px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
         }
 
-        /* Рамка с ровными отступами (из прошлого шага) */
+        /* Рамка с вопросами */
         #question-modal {
             position: absolute;
             top: 40%;
@@ -124,7 +124,6 @@
             line-height: 1.3; 
         }
 
-        /* Кнопки ответов внутри таблички */
         .answer-btn {
             display: block;
             width: 75%; 
@@ -155,15 +154,21 @@
             z-index: 30;
         }
 
+        /* Текст адаптирован под длинные фразы */
         #final-text {
             position: absolute;
-            top: 20%;
-            right: 10%;
+            top: 15%;
+            left: 0;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+            text-align: center;
             font-family: 'Caveat', cursive;
-            font-size: 100px;
+            font-size: 60px; /* Чуть уменьшили для вместительности */
+            line-height: 1.2;
             color: #f1c40f;
             text-shadow: 2px 2px 0 #d35400, -1px -1px 0 #d35400, 1px -1px 0 #d35400, -1px 1px 0 #d35400, 3px 3px 10px rgba(0,0,0,0.5);
-            transform: rotate(-10deg);
+            transform: rotate(-3deg);
         }
 
         canvas {
@@ -190,7 +195,7 @@
 
     <div id="final-screen">
         <canvas id="fireworks-canvas"></canvas>
-        <div id="final-text">Отлично!</div>
+        <div id="final-text"></div> 
     </div>
 </div>
 
@@ -214,6 +219,7 @@
     const treeNext = document.getElementById('tree-next');
     const treeWrapper = document.getElementById('tree-wrapper');
     const finalScreen = document.getElementById('final-screen');
+    const finalTextElement = document.getElementById('final-text');
 
     const images = [];
     for (let i = 1; i <= maxStage; i++) {
@@ -287,6 +293,19 @@
     }
 
     function showVictory() {
+        // Логика вывода твоих фраз в зависимости от стадии сосны
+        if (treeStage === 5) {
+            finalTextElement.textContent = "Отлично!";
+        } else if (treeStage === 4) {
+            finalTextElement.textContent = "Молодец! Сосна подросла!";
+        } else if (treeStage === 3) {
+            finalTextElement.textContent = "Хорошее начало!";
+        } else if (treeStage === 2) {
+            finalTextElement.textContent = "Нужно еще немного постараться!";
+        } else {
+            finalTextElement.textContent = "Не сдавайся, изучай природу!";
+        }
+
         finalScreen.style.display = 'block';
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
@@ -294,7 +313,7 @@
         canvas.height = window.innerHeight;
 
         let particles = [];
-        let startX = canvas.width * 0.8; 
+        let startX = canvas.width * 0.5; 
         let startY = canvas.height * 0.5;
 
         for (let i = 0; i < 120; i++) {
