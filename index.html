@@ -81,6 +81,7 @@
         #btn-next:hover { background-color: #2ecc71; }
         #btn-next:active { transform: translateX(-50%) scale(0.95); }
 
+        /* УВЕЛИЧЕННАЯ ПЛАШКА */
         #question-modal {
             position: absolute;
             top: 40%;
@@ -92,30 +93,32 @@
             background-position: center;
             background-color: transparent; 
             
-            padding: 70px 80px 80px 80px; 
+            /* Настроил отступы пропорционально новому размеру */
+            padding: 80px 100px 90px 100px; 
             box-sizing: border-box;
             
             text-align: center;
             display: none;
             z-index: 20;
-            width: 90%;
-            max-width: 600px;
-            min-height: 350px; 
+            width: 95%; /* Занимает больше ширины экрана */
+            max-width: 800px; /* Раньше было 600px, теперь плашка шире */
+            min-height: 450px; /* Раньше было 350px, теперь она выше */
         }
 
         #question-text {
-            font-size: 22px;
-            margin-bottom: 25px;
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #3e2723; 
             font-weight: bold;
+            line-height: 1.3; /* Добавил межстрочный интервал для длинных вопросов */
         }
 
         .answer-btn {
             display: block;
-            width: 85%; 
+            width: 90%; /* Кнопки тоже стали чуть шире внутри плашки */
             margin: 12px auto; 
-            padding: 12px;
-            font-size: 16px;
+            padding: 15px;
+            font-size: 18px;
             font-weight: bold;
             background: #558b2f; 
             color: white;
@@ -180,7 +183,6 @@
 </div>
 
 <script>
-    // Настоящие вопросы из доклада
     const questions = [
         { q: "Что заставляет сосновую шишку закрывать свои чешуйки?", options: ["Холодный ветер", "Повышенная влажность", "Темнота"], correct: 1 },
         { q: "Зачем шишка плотно закрывается перед дождем?", options: ["Чтобы сохранить свои семена", "Чтобы не замерзнуть", "Чтобы спрятаться от птиц"], correct: 0 },
