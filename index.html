@@ -51,9 +51,9 @@
         }
 
         @keyframes pulseRed {
-            0% { filter: none; transform: scale(1); }
-            50% { filter: sepia(1) hue-rotate(-50deg) saturate(5); transform: scale(0.98); }
-            100% { filter: none; transform: scale(1); }
+            0% { filter: none; transform: translateX(-50%) scale(1); }
+            50% { filter: sepia(1) hue-rotate(-50deg) saturate(5); transform: translateX(-50%) scale(0.98); }
+            100% { filter: none; transform: translateX(-50%) scale(1); }
         }
 
         .error-anim {
@@ -81,54 +81,56 @@
         #btn-next:hover { background-color: #2ecc71; }
         #btn-next:active { transform: translateX(-50%) scale(0.95); }
 
-        /* Окно с вопросом - теперь с твоей рамкой */
         #question-modal {
             position: absolute;
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            
-            /* Подключаем твою картинку */
             background-image: url('https://raw.githubusercontent.com/svetlana18011991/sosna/main/6.png');
-            background-size: 100% 100%; /* Растягиваем рамку по размеру окна */
+            background-size: 100% 100%; 
             background-repeat: no-repeat;
             background-position: center;
-            background-color: transparent; /* Убираем белый фон */
+            background-color: transparent; 
             
-            /* Настраиваем отступы от краев рамки до текста */
-            padding: 60px 50px 70px 50px; 
+            padding: 70px 80px 80px 80px; 
             box-sizing: border-box;
             
             text-align: center;
             display: none;
             z-index: 20;
-            width: 80%;
-            max-width: 500px;
-            min-height: 300px; /* Минимальная высота, чтобы рамка не сплющивалась */
+            width: 90%;
+            max-width: 600px;
+            min-height: 350px; 
         }
 
         #question-text {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: #3e2723; 
             font-weight: bold;
         }
 
         .answer-btn {
             display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 15px;
-            font-size: 18px;
-            background: #3498db;
+            width: 85%; 
+            margin: 12px auto; 
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #558b2f; 
             color: white;
-            border: none;
-            border-radius: 6px;
+            border: 2px solid #33691e; 
+            border-radius: 15px; 
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
         }
 
-        .answer-btn:hover { background: #2980b9; }
+        .answer-btn:hover { 
+            background: #7cb342; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+        }
 
         #final-screen {
             position: absolute;
@@ -178,11 +180,12 @@
 </div>
 
 <script>
+    // Настоящие вопросы из доклада
     const questions = [
-        { q: "Сколько будет 7 × 8?", options: ["54", "56", "64"], correct: 1 },
-        { q: "Реши уравнение: 2x = 10", options: ["x = 5", "x = 4", "x = 6"], correct: 0 },
-        { q: "Площадь квадрата со стороной 4?", options: ["8", "12", "16"], correct: 2 },
-        { q: "Корень из 81?", options: ["7", "9", "8"], correct: 1 }
+        { q: "Что заставляет сосновую шишку закрывать свои чешуйки?", options: ["Холодный ветер", "Повышенная влажность", "Темнота"], correct: 1 },
+        { q: "Зачем шишка плотно закрывается перед дождем?", options: ["Чтобы сохранить свои семена", "Чтобы не замерзнуть", "Чтобы спрятаться от птиц"], correct: 0 },
+        { q: "Как называется наука, которая изучает природу для создания новых технологий?", options: ["Ботаника", "Экология", "Бионика"], correct: 2 },
+        { q: "Сколько лет может прожить сосна?", options: ["Около 10 лет", "От 100 до 600 лет", "Больше 1000 лет"], correct: 1 }
     ];
 
     let currentQuestionIndex = 0;
