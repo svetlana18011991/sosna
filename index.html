@@ -81,7 +81,7 @@
         #btn-next:hover { background-color: #2ecc71; }
         #btn-next:active { transform: translateX(-50%) scale(0.95); }
 
-        /* ИСПРАВЛЕННАЯ РАМКА: строго равные отступы слева и справа! */
+        /* ИСПРАВЛЕННАЯ РАМКА: увеличены боковые отступы */
         #question-modal {
             position: absolute;
             top: 40%;
@@ -93,30 +93,31 @@
             background-position: center;
             background-color: transparent; 
             
-            /* Верх: 85px, Право: 90px, Низ: 80px, Лево: 90px */
-            padding: 85px 90px 80px 90px; 
+            /* Увеличили боковые отступы до 110px, чтобы текст точно обходил рисунки */
+            padding: 85px 110px 80px 110px; 
             box-sizing: border-box;
             
             text-align: center;
             display: none;
             z-index: 20;
             width: 90%; 
-            max-width: 650px; /* Сделали чуть-чуть шире для длинных вопросов */
+            max-width: 650px; 
             min-height: 380px; 
         }
 
         #question-text {
             font-size: 22px; 
-            margin-bottom: 25px;
+            margin: 0 auto 25px auto; /* Центрируем блок с текстом */
             color: #3e2723; 
             font-weight: bold;
             line-height: 1.3; 
         }
 
+        /* ИСПРАВЛЕННЫЕ КНОПКИ: сделали их короче */
         .answer-btn {
             display: block;
-            width: 100%; 
-            margin: 10px auto; 
+            width: 75%; /* Теперь они занимают не всю ширину, а смотрятся аккуратнее */
+            margin: 10px auto; /* Ровно по центру */
             padding: 12px; 
             font-size: 17px;
             font-weight: bold;
