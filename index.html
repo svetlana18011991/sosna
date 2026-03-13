@@ -81,7 +81,7 @@
         #btn-next:hover { background-color: #2ecc71; }
         #btn-next:active { transform: translateX(-50%) scale(0.95); }
 
-        /* ИСПРАВЛЕННАЯ РАМКА: вернули размер и настроили хитрые отступы */
+        /* ИСПРАВЛЕННАЯ РАМКА: строго равные отступы слева и справа! */
         #question-modal {
             position: absolute;
             top: 40%;
@@ -93,21 +93,21 @@
             background-position: center;
             background-color: transparent; 
             
-            /* Верх: 70px, Право: 120px (из-за шишек!), Низ: 80px, Лево: 70px */
-            padding: 70px 120px 80px 70px; 
+            /* Верх: 85px, Право: 90px, Низ: 80px, Лево: 90px */
+            padding: 85px 90px 80px 90px; 
             box-sizing: border-box;
             
             text-align: center;
             display: none;
             z-index: 20;
             width: 90%; 
-            max-width: 600px; /* Вернули компактный вид */
+            max-width: 650px; /* Сделали чуть-чуть шире для длинных вопросов */
             min-height: 380px; 
         }
 
         #question-text {
-            font-size: 20px; /* Сделали шрифт чуть меньше */
-            margin-bottom: 20px;
+            font-size: 22px; 
+            margin-bottom: 25px;
             color: #3e2723; 
             font-weight: bold;
             line-height: 1.3; 
@@ -115,10 +115,10 @@
 
         .answer-btn {
             display: block;
-            width: 100%; /* Растягиваем на всю доступную ширину ВНУТРИ отступов */
+            width: 100%; 
             margin: 10px auto; 
-            padding: 10px; /* Чуть тоньше кнопки */
-            font-size: 16px;
+            padding: 12px; 
+            font-size: 17px;
             font-weight: bold;
             background: #558b2f; 
             color: white;
